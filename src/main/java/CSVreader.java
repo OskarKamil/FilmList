@@ -1,28 +1,32 @@
-package main.java;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class CSVreader {
-    String filePath;
+    String filePath = "src/resources/MyFilms.csv";
     File file;
-    Scanner scanner;
+    Scanner filmsFile;
+    Scanner oneLine;
 
     public CSVreader() {
-        filePath = "src/resources/MyFilms.csv";
         file = new File(filePath);
         try {
-            scanner = new Scanner(file);
+            filmsFile = new Scanner(file);
         } catch (FileNotFoundException e) {
             System.err.println("File not found.");
         }
-        scanner.useDelimiter("[\n;]");
+        filmsFile.useDelimiter("[\n;]");
+    }
+
+    public String nextLine() {
+        String nextLine;
+        nextLine = filmsFile.nextLine();
+        return nextLine;
     }
 
     public String nextValue() {
         String nextWord;
-        nextWord = scanner.next();
+        nextWord = filmsFile.next();
         return nextWord;
     }
 }

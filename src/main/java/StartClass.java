@@ -1,19 +1,18 @@
-package main.java;
-
 import java.util.Scanner;
 
 public class StartClass {
     public static void main(String[] args) {
         System.out.println("Welcome to Watched Film Record Keeper for people with OCD");
+
         CSVreader reader = new CSVreader();
         String word;
-        word = reader.nextValue();
+        word = reader.nextLine();
         System.out.println(word);
-        word = reader.nextValue();
+        word = reader.nextLine();
         System.out.println(word);
-        word = reader.nextValue();
+        word = reader.nextLine();
         System.out.println(word);
-        word = reader.nextValue();
+        word = reader.nextLine();
         System.out.println(word);
 
 
