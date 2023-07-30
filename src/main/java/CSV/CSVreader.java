@@ -1,12 +1,13 @@
+package CSV;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class CSVreader {
-    String filePath = "src/resources/MyFilms.csv";
-    File file;
-    Scanner filmsFile;
-    Scanner oneLine;
+class CSVreader {
+    private final String filePath = "src/resources/MyFilms.csv";
+    private final File file;
+    private Scanner filmsFile;
 
     public CSVreader() {
         file = new File(filePath);

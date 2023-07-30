@@ -1,3 +1,5 @@
+package def;
+
 import java.util.Scanner;
 
 public class FilmRecord {
