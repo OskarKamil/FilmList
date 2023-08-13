@@ -4,11 +4,13 @@ import CSV.CSVtextParser;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
 
 public class StartClass {
 
-    public Collection<FilmRecord> listOfFilms;
+    public static List<FilmRecord> listOfFilms;
+
     public static void main(String[] args) {
         System.out.println("Welcome to Watched Film Record Keeper for people with OCD");
         welcomeMethod();
@@ -25,6 +27,7 @@ public class StartClass {
                     [1] See your current film list
                     [2] Add a film to the list
                     [3] Read from CSV file
+                    [4] Read from SQLite file
                     """);
             choice = keyboard.nextShort();
         }
@@ -38,6 +41,13 @@ public class StartClass {
                 break;
             case 3:
                 CSVtextParser CSVfile = new CSVtextParser();
+                readRecordsFromCSV(CSVfile);
+                System.out.println(listOfFilms.get(0));
+
+                //TODO continue here, the method called above will read lines from the file and will populate the arraylist of records of films
+                break;
+            case 4:
+                //read from sql like above from csv
                 break;
         }
     }
@@ -45,5 +55,10 @@ public class StartClass {
     public static void addFilmRecord() {
         FilmRecord temp = new FilmRecord();
         temp.addFilmRecordFromKeyboard();
+    }
+
+    public static void readRecordsFromCSV(CSVtextParser CSVfile) {
+        listOfFilms = new ArrayList<FilmRecord>();
+        listOfFilms.add(CSVfile.getNextFilmRecordFromFile());
     }
 }

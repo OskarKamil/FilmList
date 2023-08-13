@@ -6,12 +6,12 @@ public class FilmRecord {
     private String englishTitle;
     private String originalTitle;
     private String type;
-    private short releaseYear;
-    private short rating;
-    private short watchDate;
+    private String releaseYear;
+    private String rating;
+    private String watchDate;
     private String comments;
 
-    public FilmRecord(String englishTitle, String originalTitle, String type, short releaseYear, short rating, short watchDate, String comments) {
+    public FilmRecord(String englishTitle, String originalTitle, String type, String releaseYear, String rating, String watchDate, String comments) {
         //LocalDate today = LocalDate.now();
         this.englishTitle = englishTitle;
         this.originalTitle = originalTitle;
@@ -27,7 +27,7 @@ public class FilmRecord {
     public FilmRecord() {
     }
 
-    public void addFilmRecordFromKeyboard(){
+    public void addFilmRecordFromKeyboard() {
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Adding film record. Please enter the following details:");
         System.out.println("English title:");
@@ -58,30 +58,30 @@ public class FilmRecord {
         this.type = type;
     }
 
-    public short getReleaseYear() {
+    public String getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(short releaseYear) {
+    public void setReleaseYear(String releaseYear) {
 //        LocalDate today = LocalDate.now();
 //        if (releaseYear < 1900 || releaseYear > today.getYear())
 //            throw new IllegalArgumentException("Release year must be between 1900 and today");
         this.releaseYear = releaseYear;
     }
 
-    public short getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(short rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
-    public short getWatchDate() {
+    public String getWatchDate() {
         return watchDate;
     }
 
-    public void setWatchDate(short watchDate) {
+    public void setWatchDate(String watchDate) {
         this.watchDate = watchDate;
     }
 
@@ -91,5 +91,10 @@ public class FilmRecord {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "FilmRecord{" + "englishTitle='" + englishTitle + '\'' + ", originalTitle='" + originalTitle + '\'' + ", type='" + type + '\'' + ", releaseYear='" + releaseYear + '\'' + ", rating='" + rating + '\'' + ", watchDate='" + watchDate + '\'' + ", comments='" + comments + '\'' + '}';
     }
 }
