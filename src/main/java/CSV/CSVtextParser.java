@@ -6,28 +6,53 @@ import java.util.*;
 
 public class CSVtextParser {
     private final CSVreader reader;
-    private String lineFromFile;
+    private StringBuilder lineFromFile;
+    private Collection<String> valuesFromLine;
+    private Iterator<String> iterator;
     private boolean firstLineRead;
 
     public CSVtextParser() {
         super();
         reader = new CSVreader();
-        lineFromFile = reader.nextLine();
-        String[] valuesArray = (lineFromFile.split("[\t]"));
-        Collection<String> valuesArrayList = new ArrayList<>(List.of(valuesArray));
-        Iterator<String> iterator = valuesArrayList.iterator();
+        this.readNextLine();
+        this.prepareValuesFromCurrentLine();
         System.out.print("This CSV file's structures is: ");
-        while (iterator.hasNext())
-            System.out.print("["+iterator.next()+"] ");
+        while (iterator.hasNext()) System.out.print("[" + iterator.next() + "] ");
+        System.out.println();
     }
 
-    public String nextLine(){
-        return reader.nextLine();
+    public String readNextLine() {
+        lineFromFile = new StringBuilder(reader.nextLine());
+        valuesFromLine = null;
+        return lineFromFile.toString();
+    }
+
+    public String nextValueFromLine() {
+        if (valuesFromLine == null) {
+            String[] valuesArray = (lineFromFile.toString().split("[\t]"));
+            valuesFromLine = new ArrayList<>(List.of(valuesArray));
+            iterator = valuesFromLine.iterator();
+        }
+        return iterator.next();
+    }
+
+    public void prepareValuesFromCurrentLine() {
+        String[] valuesArray = (lineFromFile.toString().split("[\t]"));
+        valuesFromLine = new ArrayList<>(List.of(valuesArray));
+        iterator = valuesFromLine.iterator();
     }
 
     public FilmRecord getNextFilmRecordFromFile() {
-        lineFromFile = reader.nextLine();
-
-        return null;
+        readNextLine();
+        prepareValuesFromCurrentLine();
+        FilmRecord record = new FilmRecord();
+        if (iterator.hasNext()) record.setEnglishTitle(iterator.next());
+        if (iterator.hasNext()) record.setOriginalTitle(iterator.next());
+        if (iterator.hasNext()) record.setType(iterator.next());
+        if (iterator.hasNext()) record.setReleaseYear((iterator.next()));
+        if (iterator.hasNext()) record.setRating((iterator.next()));
+        if (iterator.hasNext()) record.setWatchDate(iterator.next());
+        if (iterator.hasNext()) record.setEnglishTitle(iterator.next());
+        return record;
     }
 }
