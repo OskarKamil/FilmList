@@ -97,4 +97,9 @@ public class FilmRecord {
     public String toString() {
         return "FilmRecord{" + "englishTitle='" + englishTitle + '\'' + ", originalTitle='" + originalTitle + '\'' + ", type='" + type + '\'' + ", releaseYear='" + releaseYear + '\'' + ", rating='" + rating + '\'' + ", watchDate='" + watchDate + '\'' + ", comments='" + comments + '\'' + '}';
     }
+
+    public String toNiceString() {
+        return englishTitle + '\t' + originalTitle + '\t' + type + '\t' + releaseYear + '\t' + rating + '\t' + watchDate + '\t' + comments;
+
+    }
 }

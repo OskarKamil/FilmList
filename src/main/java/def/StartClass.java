@@ -2,14 +2,11 @@ package def;
 
 import CSV.CSVtextParser;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Scanner;
 
 public class StartClass {
 
-    public static List<FilmRecord> listOfFilms;
+
 
     public static void main(String[] args) {
         System.out.println("Welcome to Watched Film Record Keeper for people with OCD");
@@ -20,45 +17,38 @@ public class StartClass {
 
     public static void welcomeMethod() {
         Scanner keyboard = new Scanner(System.in);
-        short choice = 0;
-        while (choice < 1 || choice > 3) {
+        short choice = -1;
+        while (choice < 0 || choice > 5) {
             System.out.println("""
                     Would you like to do:
+                    [0] Exit the program
                     [1] See your current film list
                     [2] Add a film to the list
                     [3] Read from CSV file
-                    [4] Read from SQLite file
+                    [4] Read from SQLite filw
                     """);
             choice = keyboard.nextShort();
         }
         switch (choice) {
+            case 0:
+                System.exit(0);
+                break;
             case 1:
-                System.out.println("Hello");
-                addFilmRecord();
-
+                System.out.println("Hello"); //doesn't do what should, just random code for now
                 break;
             case 2:
+                RecordManager.addFilmRecordFromKeyboard(); //just placeholder, probably delete later
                 break;
             case 3:
                 CSVtextParser CSVfile = new CSVtextParser();
-                readRecordsFromCSV(CSVfile);
-                System.out.println(listOfFilms.get(0));
-
-                //TODO continue here, the method called above will read lines from the file and will populate the arraylist of records of films
+                RecordManager.loadRecordsFromCSVtoArray(CSVfile);
+                RecordManager.displayArraylistContent();
                 break;
             case 4:
                 //read from sql like above from csv
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + choice);
         }
-    }
-
-    public static void addFilmRecord() {
-        FilmRecord temp = new FilmRecord();
-        temp.addFilmRecordFromKeyboard();
-    }
-
-    public static void readRecordsFromCSV(CSVtextParser CSVfile) {
-        listOfFilms = new ArrayList<FilmRecord>();
-        listOfFilms.add(CSVfile.getNextFilmRecordFromFile());
     }
 }

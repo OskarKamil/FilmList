@@ -52,7 +52,14 @@ public class CSVtextParser {
         if (iterator.hasNext()) record.setReleaseYear((iterator.next()));
         if (iterator.hasNext()) record.setRating((iterator.next()));
         if (iterator.hasNext()) record.setWatchDate(iterator.next());
-        if (iterator.hasNext()) record.setEnglishTitle(iterator.next());
+        if (iterator.hasNext()) record.setComments(iterator.next());
         return record;
+    }
+
+    public List<FilmRecord> getAllFilmsRecordsFromFile(){
+        List<FilmRecord> listOfAllFilms = new ArrayList<>(256);
+        while(reader.hasNextLine())
+            listOfAllFilms.add(getNextFilmRecordFromFile());
+        return listOfAllFilms;
     }
 }

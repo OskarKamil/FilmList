@@ -1,6 +1,0 @@
-csv parser
-    this class will translate lines from text file into values to create film record objects
-    this class will have method to parse values into proper object variables
-    this class will ignore first line
-
-    TODO: create a way for this class to read line and delimit values between ;
