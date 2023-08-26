@@ -15,13 +15,17 @@ public class RecordManager {
     }
 
     public static void loadRecordsFromCSVtoArray(CSVtextParser CSVfile) {
-        listOfFilms = new ArrayList<FilmRecord>();
+        listOfFilms = new ArrayList<FilmRecord>(3000);
         listOfFilms = CSVfile.getAllFilmsRecordsFromFile();
     }
 
     public static void displayArraylistContent() {
+        int i = 0;
         for (FilmRecord record : listOfFilms) {
-            System.out.println(record.toString());
+            System.out.println(i++ + " " + record.toString());
+            if (i == 2148)
+                System.out.println("LASTLASTLAST");
+
 
         }
     }

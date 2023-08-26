@@ -5,9 +5,6 @@ import CSV.CSVtextParser;
 import java.util.Scanner;
 
 public class StartClass {
-
-
-
     public static void main(String[] args) {
         System.out.println("Welcome to Watched Film Record Keeper for people with OCD");
         welcomeMethod();
@@ -25,7 +22,7 @@ public class StartClass {
                     [1] See your current film list
                     [2] Add a film to the list
                     [3] Read from CSV file
-                    [4] Read from SQLite filw
+                    [4] Read from SQLite file
                     """);
             choice = keyboard.nextShort();
         }
