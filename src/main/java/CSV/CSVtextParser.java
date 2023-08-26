@@ -2,7 +2,10 @@ package CSV;
 
 import def.FilmRecord;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 public class CSVtextParser {
     private final CSVreader reader;
@@ -56,10 +59,11 @@ public class CSVtextParser {
         return record;
     }
 
-    public List<FilmRecord> getAllFilmsRecordsFromFile(){
-        List<FilmRecord> listOfAllFilms = new ArrayList<>(256);
-        while(reader.hasNextLine())
+    public List<FilmRecord> getAllFilmsRecordsFromFile() {
+        List<FilmRecord> listOfAllFilms = new ArrayList<>(3000);
+        while (reader.hasNextLine()) {
             listOfAllFilms.add(getNextFilmRecordFromFile());
+        }
         return listOfAllFilms;
     }
 }

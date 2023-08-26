@@ -2,6 +2,8 @@ package CSV;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 class CSVreader {
@@ -12,9 +14,11 @@ class CSVreader {
     public CSVreader() {
         file = new File(filePath);
         try {
-            filmsFile = new Scanner(file);
+            filmsFile = new Scanner(file, StandardCharsets.UTF_8);
         } catch (FileNotFoundException e) {
             System.err.println("File not found.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         filmsFile.useDelimiter("[\n;]");
     }
