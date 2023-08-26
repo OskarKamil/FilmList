@@ -20,9 +20,14 @@ class CSVreader {
     }
 
     public String nextLine() {
-        String nextLine;
-        nextLine = filmsFile.nextLine();
-        return nextLine;
+        if (hasNextLine())
+            return filmsFile.nextLine();
+        else
+            return "";
+    }
+
+    public boolean hasNextLine(){
+        return filmsFile.hasNextLine();
     }
 
     public String nextValue() {
