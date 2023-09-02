@@ -100,6 +100,9 @@ public class FilmRecord {
 
     public String toNiceString() {
         return englishTitle + '\t' + originalTitle + '\t' + type + '\t' + releaseYear + '\t' + rating + '\t' + watchDate + '\t' + comments;
+    }
 
+    public String toNiceString2() {
+        return englishTitle + ", " + originalTitle + ", " + type + ", " + releaseYear + ", " + rating + ", " + watchDate + ", " + comments;
     }
 }
