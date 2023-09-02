@@ -1,13 +1,13 @@
 package def;
 
-import CSV.CSVtextParser;
+import csv.CSVtextParser;
 
 import java.util.Scanner;
 
 public class StartClass {
     public static void main(String[] args) {
         System.out.println("Welcome to Watched Film Record Keeper for people with OCD");
-        welcomeMethod();
+        //welcomeMethod();
 
 
     }
@@ -41,6 +41,7 @@ public class StartClass {
                 RecordManager.loadRecordsFromCSVtoArray(CSVfile);
                 RecordManager.displayArraylistContent();
                 break;
+                //TODO try using javaFX because you successfully started using gradle
             case 4:
                 //read from sql like above from csv
                 break;

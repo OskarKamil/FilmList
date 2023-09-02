@@ -1,5 +1,12 @@
 plugins {
-    id("java")
+    id("application")
+    id("org.openjfx.javafxplugin") version "0.0.14"
+    id("org.beryx.jlink") version "2.25.0"
+}
+
+javafx {
+    version = "20.0.2"
+    modules( "javafx.controls", "javafx.fxml")
 }
 
 group = "org.example"
@@ -16,4 +23,8 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass.set("javagui.HelloFX")
 }

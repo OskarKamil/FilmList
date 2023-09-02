@@ -32,24 +32,17 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-  <children>
-    <MenuBar accessibleRole="INCREMENT_BUTTON" cache="true" cacheHint="SPEED" depthTest="ENABLE" VBox.vgrow="NEVER">
+<BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+    <MenuBar accessibleRole="INCREMENT_BUTTON" cache="true" cacheHint="SPEED" depthTest="ENABLE" prefHeight="0.0" prefWidth="315.0" BorderPane.alignment="CENTER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -86,37 +79,42 @@
             <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
           </items>
         </Menu>
-            <Menu mnemonicParsing="false" text="Unspecified Menu">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
-            </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-      <children>
-        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
-          <font>
-            <Font size="18.0" />
-          </font>
-        </Label>
-            <Button layoutX="81.0" layoutY="111.0" mnemonicParsing="false" text="Button" />
-            <DatePicker layoutX="233.0" layoutY="132.0" />
-            <ColorPicker layoutX="71.0" layoutY="204.0" />
-            <TableView layoutX="394.0" layoutY="161.0" prefHeight="200.0" prefWidth="200.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-            </TableView>
-            <SplitPane dividerPositions="0.5" layoutX="36.0" layoutY="11.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-              </items>
-            </SplitPane>
-            <Label alignment="TOP_CENTER" layoutX="144.0" layoutY="346.0" prefWidth="298.0" text="Version 0.001" textAlignment="CENTER" />
-      </children>
-    </AnchorPane>
-  </children>
-</VBox>
+   </top>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <center>
+            <Label fx:id="filmsLabel" alignment="TOP_CENTER" contentDisplay="TOP" text="Your film here" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+         </center>
+         <top>
+            <Label alignment="BOTTOM_CENTER" prefHeight="96.0" prefWidth="242.0" text="Your most recent watched film is:" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </top>
+      </BorderPane>
+   </center>
+   <bottom>
+      <BorderPane fx:id="bottomPaneVersion" BorderPane.alignment="CENTER">
+         <left>
+            <Label fx:id="versionLabel" text=" Version 0.001 " textFill="#000000" textOverrun="CLIP" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Label>
+         </left>
+         <right>
+            <Label text="© 2023 Oskar Jargilo " textFill="#000000" textOverrun="CLIP" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Label>
+         </right>
+      </BorderPane>
+   </bottom>
+</BorderPane>
