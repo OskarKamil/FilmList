@@ -1,0 +1,9 @@
+.button
+{
+    -fx-background-color: White;
+    -fx-font-family:courier_new;
+    -fx-text-fill:Black;
+    -fx-border-color: Black;
+-fx-border-radius: 5;
+    -fx-font-size:16;
+    }
