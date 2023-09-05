@@ -3,25 +3,17 @@ package javagui;
 import csv.CSVtextParser;
 import def.RecordManager;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Paths;
-import java.util.Objects;
 
 public class HelloFX extends Application {
 
@@ -33,18 +25,20 @@ public class HelloFX extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        URL url = Paths.get("src/resources/fxml/hellofx.fxml").toUri().toURL();
-        Parent root = FXMLLoader.load(url);
-        Label versionLabel = (Label)root.lookup("#versionLabel");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/hellofx.fxml"));
+        Label versionLabel = (Label) root.lookup("#versionLabel");
         versionLabel.setText(VERSION);
-        BorderPane bottomPaneVersion = (BorderPane)root.lookup("#bottomPaneVersion");
-        bottomPaneVersion.setBackground(Background.fill(Color.rgb(200,200,200)));
-        Label filmsLabel = (Label)root.lookup("#filmsLabel");
+        BorderPane bottomPaneVersion = (BorderPane) root.lookup("#bottomPaneVersion");
+        bottomPaneVersion.setBackground(Background.fill(Color.rgb(200, 200, 200)));
+        Label filmsLabel = (Label) root.lookup("#filmsLabel");
         filmsLabel.setText("Just checking");
+
+        stage.getIcons().add(new Image("file:src/main/resources/img/icon2.png"));
+
 
         CSVtextParser CSVfile = new CSVtextParser();
         RecordManager.loadRecordsFromCSVtoArray(CSVfile);
-        filmsLabel.setText(RecordManager.getArrayListOfFilms().get(RecordManager.getArrayListOfFilms().size()-1).toNiceString2());
+        filmsLabel.setText(RecordManager.getArrayListOfFilms().get(RecordManager.getArrayListOfFilms().size() - 1).toNiceString2());
 
 
 //        Button button = new Button("OK");
@@ -57,11 +51,14 @@ public class HelloFX extends Application {
 //
 //        //StackPane root = new StackPane();
 //        root.getChildrenUnmodifiable().add(button);
-        Scene scene = new Scene(root,600,400);
+        Scene scene = new Scene(root, 600, 400);
+        scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
+
         stage.setScene(scene);
         stage.setTitle("Watched Films Tracker");
         stage.show();
 
     }
+
 
 }

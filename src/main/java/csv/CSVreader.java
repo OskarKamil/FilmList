@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 class CSVreader {
-    private final String filePath = "src/resources/MyFilms.csv";
+    private final String filePath = "src/main/resources/MyFilms.csv";
     private final File file;
     private Scanner filmsFile;
 
