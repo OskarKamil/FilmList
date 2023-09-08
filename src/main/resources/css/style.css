@@ -1,9 +1,34 @@
+.menu
+{
+    -fx-base: #ffffff;
+    -fx-font: 13 arial;
+    -fx-text-fill:Black;
+}
+
+.menu:hover
+{
+    -fx-base: #cccccc;
+    -fx-text-fill: Black;
+}
+
 .button
 {
-    -fx-background-color: White;
-    -fx-font-family:courier_new;
-    -fx-text-fill:Black;
-    -fx-border-color: Black;
--fx-border-radius: 5;
-    -fx-font-size:16;
-    }
+    -fx-base: #eeeeee;
+    -fx-font: 14 arial;
+    -fx-text-fill: Black;
+}
+
+ .button:hover
+ {
+     -fx-base: #cccccc;
+  }
+
+.kpane
+{
+    -fx-background-color: #dddddd;
+}
+
+.kversionpane
+{
+    -fx-background-color: #bbbbbb;
+}
