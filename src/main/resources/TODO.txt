@@ -1,4 +1,0 @@
-continue tutorial
-when you understand scences, stages etc, create about page same style as birthday organiser
-learn css and make your style, all deafult fonts, buttons completely white, scenes white but a bit gray
-Add internal id for films, to return them to original order in which they were watched
