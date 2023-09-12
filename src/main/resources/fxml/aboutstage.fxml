@@ -1,75 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.stage.Stage?>
 
-<Stage alwaysOnTop="true" minHeight="130.0" minWidth="250.0" resizable="false" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <scene>
-        <Scene fill="#830d0d">
-            <AnchorPane>
-            <children>
-               <BorderPane AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
-                  <left>
-                     <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" smooth="false" BorderPane.alignment="CENTER">
-                        <image>
-                           <Image url="@../img/icon2.png" />
-                        </image>
-                        <BorderPane.margin>
-                           <Insets right="25.0" />
-                        </BorderPane.margin>
-                     </ImageView>
-                  </left>
-                  <opaqueInsets>
-                     <Insets />
-                  </opaqueInsets>
-                  <center>
-                     <VBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER_LEFT">
-                        <children>
-                           <Label fx:id="nameLabel" text="Watched films tracker GP" textFill="#000000">
-                              <font>
-                                 <Font name="Ebrima" size="14.0" />
-                              </font>
-                           </Label>
-                           <Label fx:id="copyrightLabel" text="© 2023 Oskar Jargilo" textFill="#000000">
-                              <font>
-                                 <Font name="Ebrima" size="14.0" />
-                              </font>
-                           </Label>
-                           <Label fx:id="emailLabel" text="Email: *coming soon*" textFill="#000000">
-                              <font>
-                                 <Font name="Ebrima" size="14.0" />
-                              </font>
-                           </Label>
-                           <Label fx:id="emptyLabel" />
-                           <Label fx:id="versionLabel" text="Version: 0.001" textFill="#000000">
-                              <font>
-                                 <Font name="Ebrima" size="14.0" />
-                              </font>
-                           </Label>
-                        </children>
-                     </VBox>
-                  </center>
-                  <bottom>
-                     <Button cancelButton="true" defaultButton="true" mnemonicParsing="false" prefWidth="100.0" text="OK" textAlignment="CENTER" BorderPane.alignment="CENTER">
-                        <BorderPane.margin>
-                           <Insets top="10.0" />
-                        </BorderPane.margin>
-                        <font>
-                           <Font size="14.0" />
-                        </font>
-                     </Button>
-                  </bottom>
-               </BorderPane>
-            </children></AnchorPane>
-        </Scene>
-    </scene>
-</Stage>
+<BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javagui.AboutSceneController">
+   <left>
+      <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" smooth="false" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../img/icon2.png" />
+         </image>
+         <BorderPane.margin>
+            <Insets right="25.0" />
+         </BorderPane.margin>
+      </ImageView>
+   </left>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <center>
+      <VBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER_LEFT">
+         <children>
+            <Label fx:id="nameLabel" text="Watched films tracker GP" textFill="#000000">
+               <font>
+                  <Font name="Ebrima" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="copyrightLabel" text="© 2023 Oskar Jargilo" textFill="#000000">
+               <font>
+                  <Font name="Ebrima" size="14.0" />
+               </font>
+            </Label>
+            <Hyperlink fx:id="githubLink" onAction="#openGitHubButton" text="GitHub page">
+               <font>
+                  <Font name="Ebrima" size="14.0" />
+               </font>
+            </Hyperlink>
+            <Label fx:id="emptyLabel" />
+            <Label fx:id="versionLabel" text="Version: 0.001" textFill="#000000">
+               <font>
+                  <Font name="Ebrima" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <Button fx:id="okButton" cancelButton="true" defaultButton="true" mnemonicParsing="false" onAction="#okButton" prefWidth="100.0" text="OK" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </bottom>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
+</BorderPane>
