@@ -1,14 +1,15 @@
 package javagui;
 
 import def.FilmRecord;
+import def.RecordManager;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,6 +24,8 @@ import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
+    private RecordManager filmsFile;
+    private ObservableList<FilmRecord> filmsObservableList;
     @FXML
     private TableView<FilmRecord> filmsTable;
     @FXML
@@ -46,6 +49,21 @@ public class MainSceneController implements Initializable {
     @FXML
     private Label filmsTotalLabel;
 
+    public static void delay(long millis, Runnable continuation) {
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Thread.sleep(millis);
+                } catch (InterruptedException e) {
+                }
+                return null;
+            }
+        };
+        sleeper.setOnSucceeded(event -> continuation.run());
+        new Thread(sleeper).start();
+    }
+
     @FXML
     void openAboutScene() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/aboutstage.fxml"));
@@ -67,15 +85,52 @@ public class MainSceneController implements Initializable {
     }
 
     public void updateNumberOfFilms() {
-        filmsTotalLabel.setText(String.valueOf(HelloFX.getNumberOfTotalWatchedFilms()));
+        System.out.println("update number of films");
+        filmsTotalLabel.setText(String.valueOf(filmsFile.getNumberOfTotalWatchedFilms()));
+    }
+
+    @FXML
+    void saveChanges() {
+        filmsFile.startWriter();
+        this.initialize(null, null);
+    }
+
+    public void reloadFile() {
+        System.out.println("Loading new file");
+        this.initialize(null, null);
+    }
+
+    @FXML
+    void openCSV() {
+        reloadFile();
+    }
+
+    @FXML
+    void addNewRecord() {
+        filmsObservableList.add(new FilmRecord());
+        filmsTable.getSelectionModel().select(filmsObservableList.size() - 1);
+    }
+
+    @FXML
+    void clearAll() {
+        System.out.println("cleared all");
+        filmsFile.getListOfFilms().clear();
+     //   filmsObservableList.add(new FilmRecord());
+    }
+
+    @FXML
+    void deleteSelectedRecord() {
+        FilmRecord selected;
+        selected = filmsTable.getSelectionModel().getSelectedItem();
+        filmsObservableList.remove(selected);
+        // filmsTable.refresh();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        HelloFX.loadCSVandSaveToLocalObject();
-        ObservableList<FilmRecord> films = HelloFX.getFilms();
-        System.out.println("films copy pasted in controller");
-        System.out.println(films);
+        filmsFile = new RecordManager();
+        filmsFile.startReader();
+        filmsObservableList = filmsFile.getListOfFilms();
         titleColumn.setCellValueFactory(new PropertyValueFactory<FilmRecord, String>("englishTitle"));
         originalTitleColumn.setCellValueFactory(new PropertyValueFactory<FilmRecord, String>("originalTitle"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<FilmRecord, String>("type"));
@@ -83,7 +138,7 @@ public class MainSceneController implements Initializable {
         ratingColumn.setCellValueFactory(new PropertyValueFactory<FilmRecord, String>("rating"));
         watchDateColumn.setCellValueFactory(new PropertyValueFactory<FilmRecord, String>("watchDate"));
         commentsColumn.setCellValueFactory(new PropertyValueFactory<FilmRecord, String>("comments"));
-        filmsTable.setItems(HelloFX.getFilms());
+        filmsTable.setItems(filmsObservableList);
 
         titleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         originalTitleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -92,6 +147,7 @@ public class MainSceneController implements Initializable {
         ratingColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         watchDateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         commentsColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        filmsTable.refresh();
 
         updateNumberOfFilms();
         updateAverageFilmRating();
@@ -100,12 +156,12 @@ public class MainSceneController implements Initializable {
     }
 
     private void updateAverageFilmPerDay() {
-        averageFilmPerDayLabel.setText(HelloFX.getAverageFilmPerDay());
+        averageFilmPerDayLabel.setText(filmsFile.getAverageFilmPerDay());
     }
 
     private void updateAverageFilmRating() {
         DecimalFormat twoDecimals = new DecimalFormat("#.##");
-        averageRatingLabel.setText((twoDecimals.format(HelloFX.getAverageFilmRating()) + "/4"));
+        averageRatingLabel.setText((twoDecimals.format(filmsFile.getAverageFilmRating()) + "/4"));
     }
 
     @FXML
@@ -117,32 +173,32 @@ public class MainSceneController implements Initializable {
 
     @FXML
     void editOriginalTitle(TableColumn.CellEditEvent<FilmRecord, String> event) {
-
+        event.getTableView().getItems().get(event.getTablePosition().getRow()).setOriginalTitle(event.getNewValue());
     }
 
     @FXML
     void editRating(TableColumn.CellEditEvent<FilmRecord, String> event) {
-
+        event.getTableView().getItems().get(event.getTablePosition().getRow()).setRating(event.getNewValue());
     }
 
     @FXML
     void editReleaseYear(TableColumn.CellEditEvent<FilmRecord, String> event) {
-
+        event.getTableView().getItems().get(event.getTablePosition().getRow()).setReleaseYear(event.getNewValue());
     }
 
     @FXML
     void editTitle(TableColumn.CellEditEvent<FilmRecord, String> event) {
-
+        event.getTableView().getItems().get(event.getTablePosition().getRow()).setEnglishTitle(event.getNewValue());
     }
 
     @FXML
     void editType(TableColumn.CellEditEvent<FilmRecord, String> event) {
-
+        event.getTableView().getItems().get(event.getTablePosition().getRow()).setType(event.getNewValue());
     }
 
     @FXML
     void editWatchDate(TableColumn.CellEditEvent<FilmRecord, String> event) {
-
+        event.getTableView().getItems().get(event.getTablePosition().getRow()).setWatchDate(event.getNewValue());
     }
 
 

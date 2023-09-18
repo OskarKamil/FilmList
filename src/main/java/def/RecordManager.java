@@ -1,35 +1,100 @@
 package def;
 
-import csv.CSVtextParser;
+import csv.CSVreader;
+import csv.CSVwriter;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecordManager {
 
-    public static List<FilmRecord> listOfFilms;
+    private ObservableList<FilmRecord> listOfFilms;
+    private String fileColumns;
+    private CSVreader reader;
+    private CSVwriter writer;
 
     public static void addFilmRecordFromKeyboard() {
         FilmRecord temp = new FilmRecord();
         temp.addFilmRecordFromKeyboard();
     }
 
-    public static void loadRecordsFromCSVtoArray(CSVtextParser CSVfile) {
-        listOfFilms = new ArrayList<FilmRecord>(3000);
-        listOfFilms = CSVfile.getAllFilmsRecordsFromFile();
+    public void loadRecordsFromCSVtoArray(CSVreader CSVfile) {
+        listOfFilms = FXCollections.observableArrayList(CSVfile.getAllFilmsRecordsFromFile());
     }
 
-    public static void displayArraylistContent() {
+    private ArrayList<FilmRecord> loadCSVandReturnFilmsArray() {
+        CSVreader CSVfile = new CSVreader();
+        loadRecordsFromCSVtoArray(CSVfile);
+        return getArrayListOfFilms();
+    }
+
+    public void startWriter() {
+        if (reader != null)
+            closeReader();
+        writer = new CSVwriter();
+        writer.setFileColumn(fileColumns);
+        writer.saveListIntoCSV(listOfFilms);
+        closeWriter();
+    }
+
+    private void closeWriter() {
+        if (writer != null)
+            writer.close();
+    }
+
+    public void displayArraylistContent() {
         int i = 0;
         for (FilmRecord record : listOfFilms) {
             System.out.println(i++ + " " + record.toString());
         }
     }
 
-    public static ArrayList<FilmRecord> getArrayListOfFilms()  {
-        if(listOfFilms == null)
-            throw new NullPointerException("List of films empty. Load list of films first");
-        else
-            return (ArrayList<FilmRecord>) listOfFilms;
+    public ArrayList<FilmRecord> getArrayListOfFilms() {
+        return (ArrayList<FilmRecord>) listOfFilms.stream().toList();
+    }
+
+    public String getFileColumns() {
+        return fileColumns;
+    }
+
+    public void startReader() {
+        reader = new CSVreader();
+        fileColumns = reader.getFileColumns();
+        loadRecordsFromCSVtoArray(reader);
+    }
+
+    public void closeReader() {
+        reader.closeFile();
+    }
+
+    public double getAverageFilmRating() {
+        double averageRating = 0;
+        int correction = 0;
+        for (FilmRecord film : listOfFilms) {
+            try {
+                averageRating += Double.parseDouble(film.getRating());
+            } catch (NullPointerException e) {
+                correction++;
+
+            }
+
+        }
+        averageRating /= listOfFilms.size() - correction;
+
+        return averageRating;
+    }
+
+    public int getNumberOfTotalWatchedFilms() {
+        System.out.println("Films number is: " + listOfFilms.size());
+        return listOfFilms.size();
+    }
+
+    public ObservableList<FilmRecord> getListOfFilms() {
+        return listOfFilms;
+    }
+
+    public String getAverageFilmPerDay() {
+        return "coming soon";
     }
 }

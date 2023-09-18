@@ -32,3 +32,8 @@
 {
     -fx-background-color: #bbbbbb;
 }
+
+.table-row-cell:empty {
+-fx-background-color: white;
+-fx-border-color: white;
+}
