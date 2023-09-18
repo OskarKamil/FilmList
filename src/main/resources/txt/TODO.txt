@@ -1,7 +1,6 @@
-Edited rows will also update the list.
-Add save button.
-Save button should copy updated list into the CVS file.
 Add default id value for films in which order they have been watched.
-Combine CSVreader and CSVparser.
 Create average film per day. Get first ever film and last ever watched and make an average.
-Clicking [Add new record] will take to bottom of table with empty row.
+Entering watched date of a new record should show today's date.
+Exiting will ask if save change.
+Add autosave button.
+Modal window about should blink when not pressed.

@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class AboutSceneController implements Initializable {
 
-    public static final String VERSION = " Version 0.003 ";
+    public static final String VERSION = " Version 0.004 ";
     public static final String PROGRAM_NAME = "Watched films tracker";
     @FXML
     private Label copyrightLabel;
