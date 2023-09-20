@@ -5,7 +5,13 @@ import csv.CSVwriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class RecordManager {
 
@@ -30,8 +36,7 @@ public class RecordManager {
     }
 
     public void startWriter() {
-        if (reader != null)
-            closeReader();
+        if (reader != null) closeReader();
         writer = new CSVwriter();
         writer.setFileColumn(fileColumns);
         writer.saveListIntoCSV(listOfFilms);
@@ -39,8 +44,7 @@ public class RecordManager {
     }
 
     private void closeWriter() {
-        if (writer != null)
-            writer.close();
+        if (writer != null) writer.close();
     }
 
     public void displayArraylistContent() {
@@ -64,6 +68,21 @@ public class RecordManager {
         loadRecordsFromCSVtoArray(reader);
     }
 
+    public void refreshFurtherIDs(int idOfSelected) {
+        for (int i = idOfSelected; i <= listOfFilms.size(); i++) {
+            FilmRecord record = listOfFilms.get(i - 1);
+            record.setIdInList(i);
+        }
+
+    }
+
+    public void deleteRecordFromList(FilmRecord selected) {
+        if (listOfFilms.isEmpty() || selected.getIdInList() == 0) return;
+        int idOfSelected = selected.getIdInList();
+        listOfFilms.remove(selected);
+        refreshFurtherIDs(idOfSelected);
+    }
+
     public void closeReader() {
         reader.closeFile();
     }
@@ -74,7 +93,7 @@ public class RecordManager {
         for (FilmRecord film : listOfFilms) {
             try {
                 averageRating += Double.parseDouble(film.getRating());
-            } catch (NullPointerException e) {
+            } catch (Exception e) {
                 correction++;
 
             }
@@ -94,7 +113,34 @@ public class RecordManager {
         return listOfFilms;
     }
 
-    public String getAverageFilmPerDay() {
-        return "coming soon";
+    public String getAverageWatchStatistics() {
+        ArrayList<LocalDate> dates = new ArrayList<>(listOfFilms.size());
+        int correction = 0;
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        for (FilmRecord film : listOfFilms) {
+            try {
+                LocalDate date = LocalDate.parse(film.getWatchDate(), format);
+                dates.add(date);
+            } catch (Exception e) {
+                correction++;
+                //doesn't do anything yet, but may indicate not valid film so can correct number of films and days
+            }
+
+        }
+        Collections.sort(dates);
+
+        int daysBetween = (int) (DAYS.between(dates.get(0), dates.get(dates.size() - 1)) + 1);
+        int numberOfFilms = getNumberOfTotalWatchedFilms();
+        String statisticsString="";
+
+        DecimalFormat twoDecimals = new DecimalFormat("#.##");
+        String averageFilmPerDay = (twoDecimals.format((double) numberOfFilms / daysBetween));
+        statisticsString += averageFilmPerDay + " films per day";
+
+
+        System.out.println("days between two dates are : " + daysBetween);
+
+        return statisticsString;
     }
 }

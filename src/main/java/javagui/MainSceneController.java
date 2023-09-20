@@ -2,8 +2,8 @@ package javagui;
 
 import def.FilmRecord;
 import def.RecordManager;
+import def.SettingsManager;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,10 +21,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
     private RecordManager filmsFile;
+
+    @FXML
+    private TableColumn<FilmRecord, Integer> idColumn;
     private ObservableList<FilmRecord> filmsObservableList;
     @FXML
     private TableView<FilmRecord> filmsTable;
@@ -49,19 +54,9 @@ public class MainSceneController implements Initializable {
     @FXML
     private Label filmsTotalLabel;
 
-    public static void delay(long millis, Runnable continuation) {
-        Task<Void> sleeper = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    Thread.sleep(millis);
-                } catch (InterruptedException e) {
-                }
-                return null;
-            }
-        };
-        sleeper.setOnSucceeded(event -> continuation.run());
-        new Thread(sleeper).start();
+    @FXML
+    void checkBoxDefaultDate() {
+        SettingsManager.changeDefaultDate();
     }
 
     @FXML
@@ -105,24 +100,35 @@ public class MainSceneController implements Initializable {
         reloadFile();
     }
 
+
     @FXML
     void addNewRecord() {
-        filmsObservableList.add(new FilmRecord());
-        filmsTable.getSelectionModel().select(filmsObservableList.size() - 1);
+        FilmRecord newRecord = new FilmRecord(filmsObservableList.size() + 1);
+        filmsObservableList.add(newRecord);
+        filmsTable.getSelectionModel().select(newRecord);
+
+        LocalDate today = LocalDate.now();//For reference
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedString = today.format(formatter);
+        newRecord.setWatchDate(formattedString);
+        // filmsTable.getSelectionModel().select(
     }
 
     @FXML
     void clearAll() {
         System.out.println("cleared all");
         filmsFile.getListOfFilms().clear();
-     //   filmsObservableList.add(new FilmRecord());
+        //   filmsObservableList.add(new FilmRecord());
     }
 
     @FXML
     void deleteSelectedRecord() {
         FilmRecord selected;
         selected = filmsTable.getSelectionModel().getSelectedItem();
-        filmsObservableList.remove(selected);
+        if (selected != null) {
+            filmsFile.deleteRecordFromList(selected);
+            filmsTable.getSelectionModel().select(filmsTable.getSelectionModel().getSelectedIndex() + 1);
+        }
         // filmsTable.refresh();
     }
 
@@ -138,6 +144,7 @@ public class MainSceneController implements Initializable {
         ratingColumn.setCellValueFactory(new PropertyValueFactory<FilmRecord, String>("rating"));
         watchDateColumn.setCellValueFactory(new PropertyValueFactory<FilmRecord, String>("watchDate"));
         commentsColumn.setCellValueFactory(new PropertyValueFactory<FilmRecord, String>("comments"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<FilmRecord, Integer>("idInList"));
         filmsTable.setItems(filmsObservableList);
 
         titleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -156,7 +163,7 @@ public class MainSceneController implements Initializable {
     }
 
     private void updateAverageFilmPerDay() {
-        averageFilmPerDayLabel.setText(filmsFile.getAverageFilmPerDay());
+        averageFilmPerDayLabel.setText(filmsFile.getAverageWatchStatistics());
     }
 
     private void updateAverageFilmRating() {

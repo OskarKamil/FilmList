@@ -10,6 +10,7 @@ public class FilmRecord {
     private String rating;
     private String watchDate;
     private String comments;
+    private int idInList = -1;
 
     public FilmRecord(String englishTitle, String originalTitle, String type, String releaseYear, String rating, String watchDate, String comments) {
         //LocalDate today = LocalDate.now();
@@ -25,6 +26,18 @@ public class FilmRecord {
     }
 
     public FilmRecord() {
+    }
+
+    public FilmRecord(int id) {
+        idInList = id;
+    }
+
+    public int getIdInList() {
+        return idInList;
+    }
+
+    public void setIdInList(int idInList) {
+        this.idInList = idInList;
     }
 
     public void addFilmRecordFromKeyboard() {

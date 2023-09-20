@@ -13,6 +13,7 @@ public class CSVreader {
     private StringBuilder lineFromFile;
     private Collection<String> valuesFromLine;
     private Iterator<String> iterator;
+
     public CSVreader() {
         try {
             // URL filmsCSVfile = getClass().getClassLoader().getResource("txt/MyFilms.csv");
@@ -96,7 +97,10 @@ public class CSVreader {
     public List<FilmRecord> getAllFilmsRecordsFromFile() {
         List<FilmRecord> listOfAllFilms = new ArrayList<>(3000);
         while (hasNextLine()) {
-            listOfAllFilms.add(getNextFilmRecordFromFile());
+            FilmRecord newRecord = getNextFilmRecordFromFile();
+            newRecord.setIdInList(listOfAllFilms.size()+1);
+            listOfAllFilms.add(newRecord);
+
         }
         return listOfAllFilms;
     }
