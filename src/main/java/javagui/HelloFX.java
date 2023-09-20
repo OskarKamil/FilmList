@@ -30,8 +30,9 @@ public class HelloFX extends Application {
 
 
         /* ################ */
-        Scene scene = new Scene(root, 1400, 800);
+        Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.sizeToScene();
         stage.setTitle(AboutSceneController.PROGRAM_NAME);
         stage.show();
     }
