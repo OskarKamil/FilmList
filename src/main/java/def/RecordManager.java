@@ -19,61 +19,14 @@ public class RecordManager {
     private String fileColumns;
     private CSVreader reader;
     private CSVwriter writer;
+    private String filePath;
 
-    public static void addFilmRecordFromKeyboard() {
-        FilmRecord temp = new FilmRecord();
-        temp.addFilmRecordFromKeyboard();
-    }
-
-    public void loadRecordsFromCSVtoArray(CSVreader CSVfile) {
-        listOfFilms = FXCollections.observableArrayList(CSVfile.getAllFilmsRecordsFromFile());
-    }
-
-    private ArrayList<FilmRecord> loadCSVandReturnFilmsArray() {
-        CSVreader CSVfile = new CSVreader();
-        loadRecordsFromCSVtoArray(CSVfile);
-        return getArrayListOfFilms();
-    }
-
-    public void startWriter() {
-        if (reader != null) closeReader();
-        writer = new CSVwriter();
-        writer.setFileColumn(fileColumns);
-        writer.saveListIntoCSV(listOfFilms);
-        closeWriter();
+    public void closeReader() {
+        reader.closeFile();
     }
 
     private void closeWriter() {
         if (writer != null) writer.close();
-    }
-
-    public void displayArraylistContent() {
-        int i = 0;
-        for (FilmRecord record : listOfFilms) {
-            System.out.println(i++ + " " + record.toString());
-        }
-    }
-
-    public ArrayList<FilmRecord> getArrayListOfFilms() {
-        return (ArrayList<FilmRecord>) listOfFilms.stream().toList();
-    }
-
-    public String getFileColumns() {
-        return fileColumns;
-    }
-
-    public void startReader() {
-        reader = new CSVreader();
-        fileColumns = reader.getFileColumns();
-        loadRecordsFromCSVtoArray(reader);
-    }
-
-    public void refreshFurtherIDs(int idOfSelected) {
-        for (int i = idOfSelected; i <= listOfFilms.size(); i++) {
-            FilmRecord record = listOfFilms.get(i - 1);
-            record.setIdInList(i);
-        }
-
     }
 
     public void deleteRecordFromList(FilmRecord selected) {
@@ -81,10 +34,6 @@ public class RecordManager {
         int idOfSelected = selected.getIdInList();
         listOfFilms.remove(selected);
         refreshFurtherIDs(idOfSelected);
-    }
-
-    public void closeReader() {
-        reader.closeFile();
     }
 
     public double getAverageFilmRating() {
@@ -104,16 +53,9 @@ public class RecordManager {
         return averageRating;
     }
 
-    public int getNumberOfTotalWatchedFilms() {
-        System.out.println("Films number is: " + listOfFilms.size());
-        return listOfFilms.size();
-    }
-
-    public ObservableList<FilmRecord> getListOfFilms() {
-        return listOfFilms;
-    }
-
     public String getAverageWatchStatistics() {
+        if (listOfFilms.isEmpty())
+            return "0";
         ArrayList<LocalDate> dates = new ArrayList<>(listOfFilms.size());
         int correction = 0;
 
@@ -128,19 +70,61 @@ public class RecordManager {
             }
 
         }
+        if (dates.isEmpty()) // No dates found
+            return "0";
         Collections.sort(dates);
 
         int daysBetween = (int) (DAYS.between(dates.get(0), dates.get(dates.size() - 1)) + 1);
         int numberOfFilms = getNumberOfTotalWatchedFilms();
-        String statisticsString="";
+        String statisticsString = "";
 
         DecimalFormat twoDecimals = new DecimalFormat("#.##");
         String averageFilmPerDay = (twoDecimals.format((double) numberOfFilms / daysBetween));
         statisticsString += averageFilmPerDay + " films per day";
 
-
-        System.out.println("days between two dates are : " + daysBetween);
-
         return statisticsString;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public ObservableList<FilmRecord> getListOfFilms() {
+        return listOfFilms;
+    }
+
+    public int getNumberOfTotalWatchedFilms() {
+        return listOfFilms.size();
+    }
+
+    public void loadRecordsFromCSVtoArray(CSVreader CSVfile) {
+        listOfFilms = FXCollections.observableArrayList(CSVfile.getAllFilmsRecordsFromFile());
+    }
+
+    public void refreshFurtherIDs(int idOfSelected) {
+        for (int i = 0; i < listOfFilms.size(); i++) {
+            FilmRecord record = listOfFilms.get(i);
+            if (record.getIdInList() >= idOfSelected) record.setIdInList(record.getIdInList() - 1);
+        }
+
+    }
+
+    public void startReader(String newFilePath) {
+        reader = new CSVreader(newFilePath);
+        filePath = newFilePath;
+        fileColumns = reader.getFileColumns();
+        loadRecordsFromCSVtoArray(reader);
+    }
+
+    public void startWriter(String newFilePath) {
+        if (reader != null) closeReader();
+        writer = new CSVwriter(newFilePath);
+        writer.setFileColumn(fileColumns);
+        writer.saveListIntoCSV(listOfFilms);
+        closeWriter();
     }
 }

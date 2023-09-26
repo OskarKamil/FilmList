@@ -1,7 +1,26 @@
-Entering watched date of a new record should show today's date.
-    Settings file. In controller in initialize read settings file and reflect that on settings pane.
-    If default date is on, add default date when adding new record.
-When column is sorted not by id and then record gets removed, the ids are not refreshed properly.
-Exiting will ask if save change.
-Add auto save button.
-Modal window about should blink when not pressed.
+NOW
+Sorting by column and saving will save file with new sorting but IDs stay the same.
+Possible solutions:
+    Before saving. Copy List and save in order of IDs.
+    Add new button "Generate IDs based new order".
+    or
+    Find solution so the sorted list by column does not affect the list.
+
+LATER
+Disable buttons if they do nothing
+Update statistics after each change
+Confirm changes of table cell by clicking elsewhere
+Enter goes to next cell on the right
+Button - open file explorer to open any csv file
+Button - save as CSV in any location you want
+Button - save changes current file
+Check of integrity of dates of watched (in normal id sort or normal file, date cannot go back)
+Prepare program for release. Make sure you create exe file using jlink and program is ready to be used by people.
+If entered a title and release year, check if duplicate exists in case someone forgot.
+Select multiple rows and make actions upon them
+    Cut,
+    Copy,
+    Paste,
+    Delete,
+Shortcut and undo action maybe?
+Learn hibernate and spring. What even are they?

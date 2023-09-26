@@ -6,7 +6,7 @@ plugins {
 
 javafx {
     version = "21"
-    modules( "javafx.controls", "javafx.fxml")
+    modules("javafx.controls", "javafx.fxml")
 }
 
 group = "org.example"
@@ -17,8 +17,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    // https://mvnrepository.com/artifact/org.ini4j/ini4j
+    implementation("org.ini4j:ini4j:0.5.4")
 }
 
 tasks.test {

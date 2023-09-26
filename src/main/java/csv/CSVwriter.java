@@ -9,15 +9,20 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class CSVwriter {
+    private String filePath;
     private PrintWriter filmsWriter;
     private String fileColumn;
 
-    public CSVwriter() {
+    public CSVwriter(String newFilePath) {
         try {
-            filmsWriter = new PrintWriter("src/main/resources/txt/MyFilms.csv", StandardCharsets.UTF_8);
+            filmsWriter = new PrintWriter(newFilePath, StandardCharsets.UTF_8);
         } catch (IOException e) {
             System.err.println("File not found.");
         }
+    }
+
+    public void close() {
+        filmsWriter.close();
     }
 
     public void saveListIntoCSV(ObservableList<FilmRecord> list) {
@@ -35,11 +40,7 @@ public class CSVwriter {
         System.out.println("Saved and closed");
     }
 
-    public void close() {
-        filmsWriter.close();
-    }
-
     public void setFileColumn(String fileColumns) {
-        this.fileColumn=fileColumns;
+        this.fileColumn = fileColumns;
     }
 }

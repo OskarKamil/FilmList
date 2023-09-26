@@ -41,6 +41,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -52,14 +53,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="kpane" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javagui.MainSceneController">
+<BorderPane fx:id="mainBorderPane" styleClass="kpane" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javagui.MainSceneController">
    <top>
-       <MenuBar accessibleRole="INCREMENT_BUTTON" cache="true" cacheHint="SPEED" depthTest="ENABLE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" useSystemMenuBar="true" BorderPane.alignment="CENTER">
-           <opaqueInsets>
-               <Insets />
-           </opaqueInsets>
+       <MenuBar accessibleRole="INCREMENT_BUTTON" cache="true" cacheHint="SPEED" depthTest="ENABLE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT">
            <BorderPane.margin>
-               <Insets left="-8.0" />
+               <Insets />
            </BorderPane.margin>
            <Menu mnemonicParsing="false" text="File">
                <items>
@@ -100,7 +98,8 @@
                            <Image url="@../img/about2.png" />
                         </image>
                      </ImageView>
-                  </graphic></MenuItem>
+                  </graphic>
+               </MenuItem>
                </items>
            </Menu>
        </MenuBar>
@@ -135,7 +134,26 @@
                     <content>
                         <HBox spacing="10.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#saveChanges" text="Save CSV">
+                              <Button fx:id="newFileButton1" mnemonicParsing="false" onAction="#newFile" text="New file">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/newFile.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="openFileButton" mnemonicParsing="false" onAction="#openFileChooser" text="Open file">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/openFile.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Separator orientation="VERTICAL" />
+                              <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveChanges" text="Save">
                                  <graphic>
                                     <ImageView pickOnBounds="true" preserveRatio="true" smooth="false">
                                        <image>
@@ -147,38 +165,65 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#openCSV" text="Load CSV (refresh)">
+                              <Button fx:id="saveAsButton" mnemonicParsing="false" onAction="#saveAsChanges" text="Save as">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true" smooth="false">
+                                       <image>
+                                          <Image url="@../img/saveAs2.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D />
+                                       </viewport>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="revertChangesButton" mnemonicParsing="false" onAction="#revertChanges" text="Revert changes">
                                  <graphic>
                                     <ImageView pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../img/openFile.png" />
+                                          <Image url="@../img/revert.png" />
                                        </image>
                                     </ImageView>
-                                 </graphic></Button>
-                              <Button mnemonicParsing="false" onAction="#addNewRecord" text="New film record">
+                                 </graphic>
+                              </Button>
+                              <Separator orientation="VERTICAL" />
+                              <Button fx:id="addNewRecordButton" mnemonicParsing="false" onAction="#addNewRecord" text="New film record">
                                  <graphic>
                                     <ImageView pickOnBounds="true" preserveRatio="true" smooth="false">
                                        <image>
                                           <Image url="@../img/addRecord.png" />
                                        </image>
                                     </ImageView>
-                                 </graphic></Button>
-                              <Button mnemonicParsing="false" onAction="#deleteSelectedRecord" text="Delete film record">
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="deleteOneRecordButton" mnemonicParsing="false" onAction="#deleteSelectedRecord" text="Delete film record">
                                  <graphic>
                                     <ImageView pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../img/deleteRecord.png" />
                                        </image>
                                     </ImageView>
-                                 </graphic></Button>
-                              <Button mnemonicParsing="false" onAction="#clearAll" text="Clear all">
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="cleanAllButton" mnemonicParsing="false" onAction="#clearAll" text="Clear all">
                                  <graphic>
                                     <ImageView pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../img/clear2.png" />
                                        </image>
                                     </ImageView>
-                                 </graphic></Button>
+                                 </graphic>
+                              </Button>
+                              <Separator orientation="VERTICAL" />
+                              <Button mnemonicParsing="false" onAction="#openAboutScene" text="About">
+                                 <graphic>
+                                    <ImageView pickOnBounds="true" preserveRatio="true" smooth="false">
+                                       <image>
+                                          <Image url="@../img/about2.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
                            </children>
                         </HBox>
                     </content>
@@ -236,13 +281,25 @@
                            <children>
                               <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                  <children>
-                                    <Label text="Number of films watched: " />
+                                    <Label text="Number of films watched: ">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <HBox.margin>
+                                          <Insets bottom="15.0" />
+                                       </HBox.margin></Label>
                                     <Label fx:id="filmsTotalLabel" text="0" />
                                  </children>
+                                 <opaqueInsets>
+                                    <Insets bottom="15.0" />
+                                 </opaqueInsets>
                               </HBox>
                               <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                  <children>
-                                    <Label text="Average rating per film: " />
+                                    <Label text="Average rating per film: ">
+                                       <HBox.margin>
+                                          <Insets bottom="15.0" />
+                                       </HBox.margin></Label>
                                     <Label fx:id="averageRatingLabel" text="0" />
                                  </children>
                               </HBox>
@@ -262,14 +319,18 @@
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </TitledPane>
-                  <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Settings (not functioning yet)" VBox.vgrow="ALWAYS">
+                  <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Settings" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="Arial" size="14.0" />
                      </font>
                      <content>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <CheckBox mnemonicParsing="false" onAction="#checkBoxDefaultDate" selected="true" text="Default date is today" />
+                              <CheckBox fx:id="defaultDateBox" mnemonicParsing="false" onAction="#checkBoxDefaultDate" selected="true" text="Default date is today">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin></CheckBox>
+                              <CheckBox fx:id="autoSaveBox" mnemonicParsing="false" onAction="#checkBoxAutoSave" selected="true" text="Auto Save changes" />
                            </children>
                         </VBox>
                      </content>
