@@ -108,7 +108,16 @@ public class FilmRecord {
 
     @Override
     public String toString() {
-        return "FilmRecord{" + "englishTitle='" + englishTitle + '\'' + ", originalTitle='" + originalTitle + '\'' + ", type='" + type + '\'' + ", releaseYear='" + releaseYear + '\'' + ", rating='" + rating + '\'' + ", watchDate='" + watchDate + '\'' + ", comments='" + comments + '\'' + '}';
+        return "FilmRecord{" +
+                "englishTitle='" + englishTitle + '\'' +
+                ", originalTitle='" + originalTitle + '\'' +
+                ", type='" + type + '\'' +
+                ", releaseYear='" + releaseYear + '\'' +
+                ", rating='" + rating + '\'' +
+                ", watchDate='" + watchDate + '\'' +
+                ", comments='" + comments + '\'' +
+                ", idInList=" + idInList +
+                '}';
     }
 
     public String toNiceString() {

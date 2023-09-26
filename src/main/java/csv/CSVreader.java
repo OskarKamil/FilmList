@@ -1,6 +1,7 @@
 package csv;
 
 import def.FilmRecord;
+import def.SettingsManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,20 +9,33 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class CSVreader {
+    private String filePath;
     private Scanner filmsFile;
     private String fileColumns = null;
     private StringBuilder lineFromFile;
     private Collection<String> valuesFromLine;
     private Iterator<String> iterator;
 
-    public CSVreader() {
-        try {
-            // URL filmsCSVfile = getClass().getClassLoader().getResource("txt/MyFilms.csv");
-            // assert filmsCSVfile != null;
-            filmsFile = new Scanner(new File("src/main/resources/txt/MyFilms.csv"), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            System.err.println("File not found.");
+    public CSVreader(String newFilePath) {
+        this.filePath = newFilePath;
+        File file = new File(newFilePath);
+        if (file.exists()) {
+            try {
+                filmsFile = new Scanner(new File(filePath), StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                System.err.println("File not found.");
+            }
+        } else {
+            String defaultNewFile = "Title\tOriginal Title\tType\tRelease year\tRating\tWatch date\tComments\t";
+            try {
+                filmsFile = new Scanner(defaultNewFile);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            filePath = "";
+            SettingsManager.setLastPath("");
         }
+
         filmsFile.useDelimiter("[\n;]");
 
         this.readFirstLine();
@@ -31,53 +45,32 @@ public class CSVreader {
         System.out.println();
     }
 
-    public String getFileColumns() {
-        return fileColumns;
-    }
-
     public void closeFile() {
         filmsFile.close();
     }
 
-    public void prepareValuesFromCurrentLine() {
-        String[] valuesArray = (lineFromFile.toString().split("[\t]"));
-        valuesFromLine = new ArrayList<>(List.of(valuesArray));
-        iterator = valuesFromLine.iterator();
+    public List<FilmRecord> getAllFilmsRecordsFromFile() {
+        List<FilmRecord> listOfAllFilms = new ArrayList<>(3000);
+        while (hasNextLine()) {
+            FilmRecord newRecord = getNextFilmRecordFromFile();
+            newRecord.setIdInList(listOfAllFilms.size() + 1);
+            listOfAllFilms.add(newRecord);
+
+        }
+        return listOfAllFilms;
     }
 
-    public String readFirstLine() {
-        lineFromFile = new StringBuilder(getFileStructure());
-        valuesFromLine = null;
-        return lineFromFile.toString();
+    public String getFileColumns() {
+        return fileColumns;
     }
 
-    public String nextLine() {
-        if (hasNextLine()) return filmsFile.nextLine();
-        else return "";
+    public String getFilePath() {
+        return filePath;
     }
 
     private String getFileStructure() {
         fileColumns = nextLine();
         return fileColumns;
-    }
-
-    public boolean hasNextLine() {
-        return filmsFile.hasNextLine();
-    }
-
-    public String readNextLine() {
-        lineFromFile = new StringBuilder(nextLine());
-        valuesFromLine = null;
-        return lineFromFile.toString();
-    }
-
-    public String nextValueFromLine() {
-        if (valuesFromLine == null) {
-            String[] valuesArray = (lineFromFile.toString().split("[\t]"));
-            valuesFromLine = new ArrayList<>(List.of(valuesArray));
-            iterator = valuesFromLine.iterator();
-        }
-        return iterator.next();
     }
 
     public FilmRecord getNextFilmRecordFromFile() {
@@ -94,14 +87,39 @@ public class CSVreader {
         return record;
     }
 
-    public List<FilmRecord> getAllFilmsRecordsFromFile() {
-        List<FilmRecord> listOfAllFilms = new ArrayList<>(3000);
-        while (hasNextLine()) {
-            FilmRecord newRecord = getNextFilmRecordFromFile();
-            newRecord.setIdInList(listOfAllFilms.size()+1);
-            listOfAllFilms.add(newRecord);
+    public boolean hasNextLine() {
+        return filmsFile.hasNextLine();
+    }
 
+    public String nextLine() {
+        if (hasNextLine()) return filmsFile.nextLine();
+        else return "";
+    }
+
+    public String nextValueFromLine() {
+        if (valuesFromLine == null) {
+            String[] valuesArray = (lineFromFile.toString().split("[\t]"));
+            valuesFromLine = new ArrayList<>(List.of(valuesArray));
+            iterator = valuesFromLine.iterator();
         }
-        return listOfAllFilms;
+        return iterator.next();
+    }
+
+    public void prepareValuesFromCurrentLine() {
+        String[] valuesArray = (lineFromFile.toString().split("[\t]"));
+        valuesFromLine = new ArrayList<>(List.of(valuesArray));
+        iterator = valuesFromLine.iterator();
+    }
+
+    public String readFirstLine() {
+        lineFromFile = new StringBuilder(getFileStructure());
+        valuesFromLine = null;
+        return lineFromFile.toString();
+    }
+
+    public String readNextLine() {
+        lineFromFile = new StringBuilder(nextLine());
+        valuesFromLine = null;
+        return lineFromFile.toString();
     }
 }
