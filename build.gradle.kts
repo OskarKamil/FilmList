@@ -18,9 +18,7 @@ repositories {
 
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
-    // https://mvnrepository.com/artifact/org.ini4j/ini4j
     implementation("org.ini4j:ini4j:0.5.4")
 }
 
@@ -29,5 +27,22 @@ tasks.test {
 }
 
 application {
-    mainClass.set("javagui.HelloFX")
+    mainClass.set("javagui.Launcher")
+}
+
+tasks.jar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    manifest {
+        attributes["Main-Class"] = "javagui.Launcher"
+    }
+
+    from(sourceSets.main.get().output)
+
+    // Include dependencies from the runtime configuration
+    from(configurations.runtimeClasspath.get().filter { it.name.endsWith(".jar") }.map { zipTree(it) })
+}
+
+tasks.withType<JavaCompile> {
+    options.isDebug = true
+    options.debugOptions.debugLevel = "source,lines"
 }

@@ -32,19 +32,19 @@ public class FilmRecord {
         idInList = id;
     }
 
-    public int getIdInList() {
-        return idInList;
-    }
-
-    public void setIdInList(int idInList) {
-        this.idInList = idInList;
-    }
-
     public void addFilmRecordFromKeyboard() {
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Adding film record. Please enter the following details:");
         System.out.println("English title:");
         this.setEnglishTitle(keyboard.nextLine());
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public String getEnglishTitle() {
@@ -55,6 +55,14 @@ public class FilmRecord {
         this.englishTitle = englishTitle;
     }
 
+    public int getIdInList() {
+        return idInList;
+    }
+
+    public void setIdInList(int idInList) {
+        this.idInList = idInList;
+    }
+
     public String getOriginalTitle() {
         return originalTitle;
     }
@@ -63,12 +71,12 @@ public class FilmRecord {
         this.originalTitle = originalTitle;
     }
 
-    public String getType() {
-        return type;
+    public String getRating() {
+        return rating;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public String getReleaseYear() {
@@ -82,12 +90,12 @@ public class FilmRecord {
         this.releaseYear = releaseYear;
     }
 
-    public String getRating() {
-        return rating;
+    public String getType() {
+        return type;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getWatchDate() {
@@ -98,12 +106,12 @@ public class FilmRecord {
         this.watchDate = watchDate;
     }
 
-    public String getComments() {
-        return comments;
+    public String toNiceString() {
+        return englishTitle + '\t' + originalTitle + '\t' + type + '\t' + releaseYear + '\t' + rating + '\t' + watchDate + '\t' + comments;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public String toNiceString2() {
+        return englishTitle + ", " + originalTitle + ", " + type + ", " + releaseYear + ", " + rating + ", " + watchDate + ", " + comments;
     }
 
     @Override
@@ -118,13 +126,5 @@ public class FilmRecord {
                 ", comments='" + comments + '\'' +
                 ", idInList=" + idInList +
                 '}';
-    }
-
-    public String toNiceString() {
-        return englishTitle + '\t' + originalTitle + '\t' + type + '\t' + releaseYear + '\t' + rating + '\t' + watchDate + '\t' + comments;
-    }
-
-    public String toNiceString2() {
-        return englishTitle + ", " + originalTitle + ", " + type + ", " + releaseYear + ", " + rating + ", " + watchDate + ", " + comments;
     }
 }

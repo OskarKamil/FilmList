@@ -5,8 +5,11 @@ Possible solutions:
     Add new button "Generate IDs based new order".
     or
     Find solution so the sorted list by column does not affect the list.
+When asking if save file, change icon of that window.
+Write changes in text file in version folder.
 
 LATER
+Open/Save file, default location is current file. If no file, then internal program folder
 Disable buttons if they do nothing
 Update statistics after each change
 Confirm changes of table cell by clicking elsewhere

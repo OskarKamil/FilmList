@@ -53,7 +53,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainBorderPane" styleClass="kpane" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javagui.MainSceneController">
+<BorderPane fx:id="mainBorderPane" styleClass="kpane" stylesheets="@../css/styleExample.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javagui.MainSceneController">
    <top>
        <MenuBar accessibleRole="INCREMENT_BUTTON" cache="true" cacheHint="SPEED" depthTest="ENABLE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT">
            <BorderPane.margin>
@@ -91,7 +91,7 @@
            </Menu>
            <Menu mnemonicParsing="false" text="Help">
                <items>
-                   <MenuItem fx:id="aboutButton" mnemonicParsing="false" onAction="#openAboutScene" text="About">
+                   <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" onAction="#openAboutScene" text="About">
                   <graphic>
                      <ImageView pickOnBounds="true" preserveRatio="true" smooth="false">
                         <image>
@@ -105,7 +105,7 @@
        </MenuBar>
    </top>
    <bottom>
-      <BorderPane fx:id="bottomPaneVersion" styleClass="kversionpane" stylesheets="@../css/style.css" BorderPane.alignment="CENTER">
+      <BorderPane fx:id="bottomPaneVersion" styleClass="kversionpane" stylesheets="@../css/styleExample.css" BorderPane.alignment="CENTER">
          <left>
             <Label fx:id="versionLabel" text=" Version" textFill="#000000" textOverrun="CLIP" BorderPane.alignment="CENTER">
                <font>
@@ -114,7 +114,7 @@
             </Label>
          </left>
          <right>
-            <Label text="© 2023 Oskar Jargilo " textFill="#000000" textOverrun="CLIP" BorderPane.alignment="CENTER">
+            <Label text="© 2024 Oskar Jargilo " textFill="#000000" textOverrun="CLIP" BorderPane.alignment="CENTER">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -130,9 +130,9 @@
                   <Insets />
                </HBox.margin>
                <children>
-                  <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Quick actions">
+                  <TitledPane fx:id="buttonsPane" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Quick actions">
                     <content>
-                        <HBox spacing="10.0">
+                        <HBox fx:id="justCheck" spacing="10.0">
                            <children>
                               <Button fx:id="newFileButton1" mnemonicParsing="false" onAction="#newFile" text="New file">
                                  <graphic>
@@ -215,7 +215,7 @@
                                  </graphic>
                               </Button>
                               <Separator orientation="VERTICAL" />
-                              <Button mnemonicParsing="false" onAction="#openAboutScene" text="About">
+                              <Button fx:id="aboutButton" mnemonicParsing="false" onAction="#openAboutScene" text="About">
                                  <graphic>
                                     <ImageView pickOnBounds="true" preserveRatio="true" smooth="false">
                                        <image>

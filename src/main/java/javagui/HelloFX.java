@@ -43,6 +43,7 @@ public class HelloFX extends Application {
         stage.sizeToScene();
         // stage.setTitle(AboutSceneController.PROGRAM_NAME);
         MainSceneController controller = loader.getController();
+        // scene.getStylesheets().add("css/styleDark.css"); // Dark mode
         // controller.setStageAndTitle(stage);
         stage.setOnCloseRequest(event -> {
             event.consume();
