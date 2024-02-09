@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: javagui.HelloFX
+Main-Class: javagui.Launcher
 Class-Path: ini4j-0.5.4.jar junit-platform-engine-1.10.0.jar javafx-cont
  rols-21-win.jar javafx-controls-21.jar junit-jupiter-api-5.10.0.jar jun
  it-platform-commons-1.10.0.jar javafx-base-21-win.jar junit-jupiter-5.1

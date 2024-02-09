@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.JavaExec
+
 plugins {
     id("application")
     id("org.openjfx.javafxplugin") version "0.0.14"
