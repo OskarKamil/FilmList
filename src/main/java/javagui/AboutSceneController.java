@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class AboutSceneController implements Initializable {
 
-    public static final String VERSION = " Version 0.006 ";
+    public static final String VERSION = " Version 0.007 ";
     public static final String PROGRAM_NAME = "Watched films tracker";
     @FXML
     private Label copyrightLabel;
@@ -38,17 +38,17 @@ public class AboutSceneController implements Initializable {
     @FXML
     private Hyperlink githubLink;
 
-    @FXML
-    void okButton(ActionEvent event) {
-        Stage stage = (Stage) okButton.getScene().getWindow();
-        stage.close();
-    }
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         nameLabel.setText(PROGRAM_NAME);
         versionLabel.setText(VERSION);
+
+    }
+
+    @FXML
+    void okButton(ActionEvent event) {
+        Stage stage = (Stage) okButton.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

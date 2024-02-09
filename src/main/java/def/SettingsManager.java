@@ -1,11 +1,14 @@
 package def;
 
+import javagui.Launcher;
 import org.ini4j.Wini;
 
 import java.io.File;
 import java.io.IOException;
 
 public class SettingsManager {
+
+    private static final String CONFIG_FILE_NAME = "config.ini";
     static boolean defaultDateIsToday = true;
     static boolean autoSave = false;
     static String lastPath = "";
@@ -38,9 +41,18 @@ public class SettingsManager {
         return ("defaultDateIsToday " + defaultDateIsToday + "\nautoSave " + autoSave) + "\nlastPath " + lastPath;
     }
 
+    private static boolean isRunningFromIDE() {
+        String className = Launcher.class.getName().replace('.', '/');
+        String classJar = Launcher.class.getResource("/" + className + ".class").toString();
+        return !classJar.startsWith("jar:");
+    }
+
     public static void readSettingsFile() {
         Wini ini = null;
-        File file = new File("src/main/resources/txt/config.ini");
+        String path = CONFIG_FILE_NAME;
+        if (isRunningFromIDE())
+            path = "src/main/resources/txt/" + CONFIG_FILE_NAME;
+        File file = new File(path);
         if (!file.exists()) {
             SettingsManager.saveSettingsFile();
             return;
@@ -60,7 +72,10 @@ public class SettingsManager {
 
     public static void saveSettingsFile() {
         Wini ini;
-        File file = new File("src/main/resources/txt/config.ini");
+        String path = CONFIG_FILE_NAME;
+        if (isRunningFromIDE())
+            path = "src/main/resources/txt/" + CONFIG_FILE_NAME;
+        File file = new File(path);
         if (!file.exists()) {
             try {
                 file.createNewFile();

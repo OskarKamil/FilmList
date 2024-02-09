@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Main-Class: javagui.HelloFX
+Class-Path: ini4j-0.5.4.jar junit-platform-engine-1.10.0.jar javafx-cont
+ rols-21-win.jar javafx-controls-21.jar junit-jupiter-api-5.10.0.jar jun
+ it-platform-commons-1.10.0.jar javafx-base-21-win.jar junit-jupiter-5.1
+ 0.0.jar javafx-graphics-21-win.jar junit-jupiter-params-5.10.0.jar juni
+ t-jupiter-engine-5.10.0.jar javafx-graphics-21.jar javafx-fxml-21-win.j
+ ar javafx-base-21.jar opentest4j-1.3.0.jar
+

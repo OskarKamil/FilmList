@@ -32,7 +32,7 @@
                   <Font name="Ebrima" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="copyrightLabel" text="© 2023 Oskar Jargilo" textFill="#000000">
+            <Label fx:id="copyrightLabel" text="© 2024 Oskar Jargilo" textFill="#000000">
                <font>
                   <Font name="Ebrima" size="14.0" />
                </font>

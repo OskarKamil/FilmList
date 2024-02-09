@@ -1,8 +1,6 @@
 package javagui;
 
-import def.FilmRecord;
-import def.RecordManager;
-import def.SettingsManager;
+import def.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,12 +22,32 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
-    private boolean changeInFile = false;
+    public static ButtonManager buttonManager;
+    private ProgramStateManager programStateManager;
+    @FXML
+    private Button addNewRecordButton;
+    @FXML
+    private Button cleanAllButton;
+    @FXML
+    private Button deleteOneRecordButton;
+    @FXML
+    private Button newFileButton1;
+    @FXML
+    private Button openFileButton;
+    @FXML
+    private Button revertChangesButton;
+    @FXML
+    private Button saveAsButton;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button aboutButton;
     private String filePath;
     private RecordManager filmsFile;
     @FXML
@@ -75,8 +93,8 @@ public class MainSceneController implements Initializable {
             String formattedString = today.format(formatter);
             newRecord.setWatchDate(formattedString);
         }
-        setChangeInFile(true);
-
+        ProgramStateManager.setAnyChange(true);
+        ProgramStateManager.setUnsavedChange(true);
     }
 
     @FXML
@@ -97,7 +115,8 @@ public class MainSceneController implements Initializable {
     void clearAll() {
         System.out.println("cleared all");
         filmsFile.getListOfFilms().clear();
-        setChangeInFile(true);
+        ProgramStateManager.setAnyChange(true);
+        ProgramStateManager.setUnsavedChange(true);
 
         //   filmsObservableList.add(new FilmRecord());
     }
@@ -108,9 +127,10 @@ public class MainSceneController implements Initializable {
         selected = filmsTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             filmsFile.deleteRecordFromList(selected);
-            setChangeInFile(true);
             if (filmsTable.getSelectionModel().getSelectedIndex() != 0)
                 filmsTable.getSelectionModel().select(filmsTable.getSelectionModel().getSelectedIndex() + 1);
+            ProgramStateManager.setAnyChange(true);
+            ProgramStateManager.setUnsavedChange(true);
         }
         filmsTable.refresh();
     }
@@ -118,62 +138,84 @@ public class MainSceneController implements Initializable {
     @FXML
     void editComments(TableColumn.CellEditEvent<FilmRecord, String> event) {
         event.getTableView().getItems().get(event.getTablePosition().getRow()).setComments(event.getNewValue());
-        setChangeInFile(true);
+        ProgramStateManager.setAnyChange(true);
     }
 
     @FXML
     void editOriginalTitle(TableColumn.CellEditEvent<FilmRecord, String> event) {
         event.getTableView().getItems().get(event.getTablePosition().getRow()).setOriginalTitle(event.getNewValue());
-        setChangeInFile(true);
+        ProgramStateManager.setAnyChange(true);
 
     }
 
     @FXML
     void editRating(TableColumn.CellEditEvent<FilmRecord, String> event) {
         event.getTableView().getItems().get(event.getTablePosition().getRow()).setRating(event.getNewValue());
-        setChangeInFile(true);
+        ProgramStateManager.setAnyChange(true);
 
     }
 
     @FXML
     void editReleaseYear(TableColumn.CellEditEvent<FilmRecord, String> event) {
         event.getTableView().getItems().get(event.getTablePosition().getRow()).setReleaseYear(event.getNewValue());
-        setChangeInFile(true);
+        ProgramStateManager.setAnyChange(true);
 
     }
 
     @FXML
     void editTitle(TableColumn.CellEditEvent<FilmRecord, String> event) {
         event.getTableView().getItems().get(event.getTablePosition().getRow()).setEnglishTitle(event.getNewValue());
-        setChangeInFile(true);
+        ProgramStateManager.setAnyChange(true);
 
     }
 
     @FXML
     void editType(TableColumn.CellEditEvent<FilmRecord, String> event) {
         event.getTableView().getItems().get(event.getTablePosition().getRow()).setType(event.getNewValue());
-        setChangeInFile(true);
+        ProgramStateManager.setAnyChange(true);
 
     }
 
     @FXML
     void editWatchDate(TableColumn.CellEditEvent<FilmRecord, String> event) {
         event.getTableView().getItems().get(event.getTablePosition().getRow()).setWatchDate(event.getNewValue());
-        setChangeInFile(true);
+        ProgramStateManager.setAnyChange(true);
 
-    }
-
-    public boolean getChangeInFile() {
-        return changeInFile;
-    }
-
-    private void setChangeInFile(boolean changed) {
-        changeInFile = changed;
-        updateStageTitle();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //PROGRAM STATE MANAGER
+        programStateManager = new ProgramStateManager(this);
+
+        //BUTTON MANAGER
+        ArrayList<Button> alwaysActiveButtons = new ArrayList<>();
+        alwaysActiveButtons.add(newFileButton1);
+        alwaysActiveButtons.add(openFileButton);
+        alwaysActiveButtons.add(aboutButton);
+        alwaysActiveButtons.add(saveAsButton);
+
+        ArrayList<Button> unsavedChangeButtons = new ArrayList<>();
+        unsavedChangeButtons.add(saveButton);
+
+        ArrayList<Button> openedFileButtons = new ArrayList<>();
+        openedFileButtons.add(addNewRecordButton);
+        openedFileButtons.add(cleanAllButton);
+
+        ArrayList<Button> selectedCellsButtons = new ArrayList<>();
+        selectedCellsButtons.add(deleteOneRecordButton);
+
+        ArrayList<Button> anyChangeButtons = new ArrayList<>();
+        anyChangeButtons.add(revertChangesButton);
+
+        buttonManager = new ButtonManager();
+        buttonManager.setAlwaysActiveButtons(alwaysActiveButtons);
+        buttonManager.setUnsavedChangeButtons(unsavedChangeButtons);
+        buttonManager.setOpenedFileButtons(openedFileButtons);
+        buttonManager.setSelectedCellsButtons(selectedCellsButtons);
+        buttonManager.setAnyChangeButtons(anyChangeButtons);
+        //   buttonManager.testButtons(true); // TESTING
+
         //SETTINGS
         SettingsManager.readSettingsFile();
         autoSaveBox.setSelected(SettingsManager.getAutoSave());
@@ -205,6 +247,17 @@ public class MainSceneController implements Initializable {
         commentsColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         filmsTable.refresh();
 
+        //TABLEVIEW SELECTED LISTENER
+        ProgramStateManager.setSelectedCells(false);
+        filmsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            // A cell is selected
+            // No cell is selected
+            ProgramStateManager.setSelectedCells(newSelection != null);
+        });
+
+        //  programStateManager.setAnyChange(false);
+        //programStateManager.setUnsavedChange(false);
+
         //STATISTICS
         updateStatistics();
     }
@@ -217,7 +270,8 @@ public class MainSceneController implements Initializable {
             filmsObservableList = filmsFile.getListOfFilms();
             filmsTable.setItems(filmsObservableList);
             filePath = "New File";
-            setChangeInFile(false);
+            ProgramStateManager.setAnyChange(false);
+            ProgramStateManager.setUnsavedChange(false);
             System.out.println("new file created and names: " + filePath);
             SettingsManager.setLastPath(filePath);
             updateStatistics();
@@ -257,8 +311,10 @@ public class MainSceneController implements Initializable {
             filmsObservableList = filmsFile.getListOfFilms();
             filmsTable.setItems(filmsObservableList);
             SettingsManager.setLastPath(filePath);
+            ProgramStateManager.setUnsavedChange(false);
+            ProgramStateManager.setAnyChange(false);
             updateStatistics();
-            updateStageTitle();
+            //updateStageTitle();
         }
 
     }
@@ -267,7 +323,12 @@ public class MainSceneController implements Initializable {
     void openFileChooser() {
         File file;
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File(filePath).getParentFile());
+        if ("New File".equals(filePath)) {
+            System.out.println("new file");
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+        } //TESTING
+        else
+            fileChooser.setInitialDirectory(new File(filePath).getParentFile());
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text files (*.txt), (*.csv)", "*.txt", "*.csv");
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setTitle("Open file");
@@ -278,14 +339,14 @@ public class MainSceneController implements Initializable {
     public void reloadFile() {
         System.out.println("Loading new file");
         this.initialize(null, null);
-        setChangeInFile(false);
+        ProgramStateManager.setAnyChange(false);
     }
 
     public void revertChanges(ActionEvent event) {
         openFile(filePath);
     }
 
-    public void saveAsChanges() {
+    public boolean saveAsChanges() {
         File file;
         FileChooser fileChooser = new FileChooser();
         if (filmsFile.getFilePath() != null || !Objects.equals(filmsFile.getFilePath(), ""))
@@ -297,18 +358,23 @@ public class MainSceneController implements Initializable {
         if (file != null) {
             filmsFile.startWriter(file.getPath());
             openFile(file.getPath());
+            return true;
         }
+        return false;
     }
 
     @FXML
-    void saveChanges() {
+    boolean saveChanges() {
         String filePath = filmsFile.getFilePath();
+        boolean saved = false;
         if (filePath == null || filePath.isEmpty() || filePath.equals("New File")) {
-            saveAsChanges();
-            return;
+            saved = saveAsChanges();
+            return saved;
         }
         filmsFile.startWriter(filePath);
-        setChangeInFile(false);
+        ProgramStateManager.setUnsavedChange(false);
+
+        return saved;
     }
 
     public void setStageAndTitle(Stage window) {
@@ -319,13 +385,17 @@ public class MainSceneController implements Initializable {
     public boolean shutDown() {
         System.out.println("stop");
         SettingsManager.saveSettingsFile();
-        if (SettingsManager.getAutoSave()) saveChanges();
+        if (SettingsManager.getAutoSave() && ProgramStateManager.isUnsavedChange()) saveChanges();
         else {
-            if (getChangeInFile()) {
+            if (ProgramStateManager.isUnsavedChange()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Save changes");
                 alert.setHeaderText("Save changes in this file?");
-                // alert.setContentText("Save changes in this file?");
+
+                URL programIcon = getClass().getClassLoader().getResource("img/icon2.png");
+                assert programIcon != null;
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(programIcon.toString()));
 
                 ButtonType buttonTypeOne = new ButtonType("Yes");
                 ButtonType buttonTypeTwo = new ButtonType("No");
@@ -334,20 +404,21 @@ public class MainSceneController implements Initializable {
                 alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
 
                 Optional<ButtonType> result = alert.showAndWait();
-                // alert.showAndWait();
-                if (result.get() == buttonTypeOne) { // YES
-                    saveChanges();
-                    return true;
-                } else if (result.get() == buttonTypeTwo) { // NO
-                    return true;
-                } else { // CANCEL
-                    System.out.println("option cancel");
-                    return false;
+                if (result.isPresent()) {
+                    if (result.get() == buttonTypeOne) { // YES
+                        boolean saved;
+                        saved = saveChanges();
+                        return saved;
+                    } else if (result.get() == buttonTypeTwo) { // NO
+                        return true;
+                    } else { // CANCEL
+                        System.out.println("option cancel");
+                        return false;
+                    }
                 }
             }
-
         }
-        return true;
+        return !ProgramStateManager.isUnsavedChange();
     }
 
     private void updateAverageFilmPerDay() {
@@ -356,16 +427,19 @@ public class MainSceneController implements Initializable {
 
     private void updateAverageFilmRating() {
         DecimalFormat twoDecimals = new DecimalFormat("#.##");
-        averageRatingLabel.setText((twoDecimals.format(filmsFile.getAverageFilmRating()) + "/4"));
+        if (filmsFile.getListOfFilms().isEmpty())
+            averageRatingLabel.setText("No data");
+        else
+            averageRatingLabel.setText((twoDecimals.format(filmsFile.getAverageFilmRating()) + "/4"));
     }
 
     public void updateNumberOfFilms() {
         filmsTotalLabel.setText(String.valueOf(filmsFile.getNumberOfTotalWatchedFilms()));
     }
 
-    private void updateStageTitle() {
+    public void updateStageTitle() {
         String stageTitle = "";
-        if (getChangeInFile()) {
+        if (ProgramStateManager.isUnsavedChange()) {
             stageTitle = "*";
         }
         System.out.println("updating stage title to:" + filePath);
