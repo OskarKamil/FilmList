@@ -21,11 +21,6 @@ https://www.oracle.com/uk/java/technologies/downloads/#jdk21-windows
 3. Run the program using the command `java WatchedFilmsTracker`.
 4. Follow the on-screen prompts to interact with the program.
 
-## Getting Started
+## Issues
 
-To get started with Watched Films Tracker, follow these steps:
-
-1. **Clone the Repository:** Clone this repository to your local machine using the command:
-
-   ```bash
-   git clone https://github.com/your-username/watched-films-tracker.git
+If you encounter an error suggesting that your installed version of Java is below Java 21, it is recommended to upgrade to the newest version of Java, specifically Java JDK 21. You can download the latest version from the official Oracle website: https://www.oracle.com/uk/java/technologies/downloads/#jdk21-windows. After upgrading your Java installation, try running the program again to see if the issue persists.

@@ -1,7 +1,7 @@
 package csv;
 
-import def.FilmRecord;
-import def.SettingsManager;
+import models.FilmRecord;
+import managers.SettingsManager;
 
 import java.io.File;
 import java.io.IOException;

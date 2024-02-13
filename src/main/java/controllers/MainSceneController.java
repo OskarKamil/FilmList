@@ -1,6 +1,6 @@
-package javagui;
+package controllers;
 
-import def.*;
+import managers.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +15,8 @@ import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javagui.HelloFX;
+import models.FilmRecord;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +31,6 @@ import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
     public static ButtonManager buttonManager;
-    private ProgramStateManager programStateManager;
     @FXML
     private Button addNewRecordButton;
     @FXML
@@ -186,7 +187,7 @@ public class MainSceneController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //PROGRAM STATE MANAGER
-        programStateManager = new ProgramStateManager(this);
+        ProgramStateManager programStateManager = new ProgramStateManager(this);
 
         //BUTTON MANAGER
         ArrayList<Button> alwaysActiveButtons = new ArrayList<>();

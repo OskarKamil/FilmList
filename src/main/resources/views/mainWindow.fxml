@@ -53,7 +53,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainBorderPane" styleClass="kpane" stylesheets="@../css/styleExample.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javagui.MainSceneController">
+<BorderPane fx:id="mainBorderPane" styleClass="kpane" stylesheets="@../css/styleExample.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainSceneController">
    <top>
        <MenuBar accessibleRole="INCREMENT_BUTTON" cache="true" cacheHint="SPEED" depthTest="ENABLE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT">
            <BorderPane.margin>
