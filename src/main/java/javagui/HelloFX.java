@@ -1,5 +1,7 @@
 package javagui;
 
+import controllers.AboutSceneController;
+import controllers.MainSceneController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +28,7 @@ public class HelloFX extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         HelloFX.stage = stage;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/mainWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/mainWindow.fxml"));
         Parent root = loader.load();
         Label versionLabel = (Label) root.lookup("#versionLabel");
         versionLabel.setText(AboutSceneController.VERSION);

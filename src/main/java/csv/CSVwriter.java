@@ -1,6 +1,6 @@
 package csv;
 
-import def.FilmRecord;
+import models.FilmRecord;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;

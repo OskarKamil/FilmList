@@ -1,9 +1,9 @@
-package def;
+package managers;
 
 
-import javagui.MainSceneController;
+import controllers.MainSceneController;
 
-import static javagui.MainSceneController.buttonManager;
+import static controllers.MainSceneController.buttonManager;
 
 public class ProgramStateManager {
     private static MainSceneController mainSceneController;

@@ -1,9 +1,12 @@
 import org.gradle.api.tasks.JavaExec
+import java.io.File
+
 
 plugins {
     id("application")
     id("org.openjfx.javafxplugin") version "0.0.14"
     id("org.beryx.jlink") version "2.25.0"
+    //id("org.gradle.kotlin.dsl") version "2.4.0" // Or the appropriate version
 }
 
 javafx {

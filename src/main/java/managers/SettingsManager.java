@@ -1,4 +1,4 @@
-package def;
+package managers;
 
 import javagui.Launcher;
 import org.ini4j.Wini;

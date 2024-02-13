@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javagui.AboutSceneController">
+<BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AboutSceneController">
    <left>
       <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" smooth="false" BorderPane.alignment="CENTER">
          <image>

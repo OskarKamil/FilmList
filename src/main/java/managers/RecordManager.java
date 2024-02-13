@@ -1,9 +1,10 @@
-package def;
+package managers;
 
 import csv.CSVreader;
 import csv.CSVwriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import models.FilmRecord;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
