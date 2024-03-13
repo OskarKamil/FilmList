@@ -9,6 +9,11 @@ Watched Films Tracker is a Java program designed to help you keep track of the m
 - **Data Visualization:** View film records in a user-friendly table format.
 - **Statistics:** Obtain simple statistics such as average rating per film and films watched per day or week.
 
+## Screenshots
+
+![Main page](https://github.com/OskarKamil/FilmList/blob/main/external/versions/0.006.png?raw=true)
+*Screenshot 1: Main interface displaying birthdays*
+
 ## Requirements
 
 - Latest version of Java JDK 21.
