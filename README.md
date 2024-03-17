@@ -12,7 +12,7 @@ Watched Films Tracker is a Java program designed to help you keep track of the m
 ## Screenshots
 
 ![Main page](https://github.com/OskarKamil/FilmList/blob/main/external/versions/0.006.png?raw=true)
-*Screenshot 1: Main interface displaying birthdays*
+*Screenshot 1: Main interface displaying list of films*
 
 ## Requirements
 
