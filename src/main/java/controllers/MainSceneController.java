@@ -231,7 +231,7 @@ public class MainSceneController implements Initializable {
         watchDateColumn.setCellValueFactory(new PropertyValueFactory<FilmRecord, String>("watchDate"));
         commentsColumn.setCellValueFactory(new PropertyValueFactory<FilmRecord, String>("comments"));
         idColumn.setCellValueFactory(new PropertyValueFactory<FilmRecord, Integer>("idInList"));
-        openFile(SettingsManager.getLastPath());
+        openFilepath(SettingsManager.getLastPath());
 //        filmsFile = new RecordManager();
 //        filmsFile.startReader(SettingsManager.getLastPath());
 //        filePath = SettingsManager.getLastPath();
@@ -300,7 +300,7 @@ public class MainSceneController implements Initializable {
         stage.show();
     }
 
-    void openFile(String newFilePath) {
+    void openFilepath(String newFilePath) {
         System.out.println("trying to open new file");
         if (Objects.equals(newFilePath, "")) {
             System.out.println("trying to create new file");
@@ -334,7 +334,7 @@ public class MainSceneController implements Initializable {
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setTitle("Open file");
         file = fileChooser.showOpenDialog(stage);
-        if (file != null) openFile(file.getPath());
+        if (file != null) openFilepath(file.getPath());
     }
 
     public void reloadFile() {
@@ -344,7 +344,7 @@ public class MainSceneController implements Initializable {
     }
 
     public void revertChanges(ActionEvent event) {
-        openFile(filePath);
+        openFilepath(filePath);
     }
 
     public boolean saveAsChanges() {
@@ -358,7 +358,7 @@ public class MainSceneController implements Initializable {
         file = fileChooser.showSaveDialog(stage);
         if (file != null) {
             filmsFile.startWriter(file.getPath());
-            openFile(file.getPath());
+            openFilepath(file.getPath());
             return true;
         }
         return false;
@@ -437,6 +437,7 @@ public class MainSceneController implements Initializable {
     public void updateNumberOfFilms() {
         filmsTotalLabel.setText(String.valueOf(filmsFile.getNumberOfTotalWatchedFilms()));
     }
+
 
     public void updateStageTitle() {
         String stageTitle = "";
